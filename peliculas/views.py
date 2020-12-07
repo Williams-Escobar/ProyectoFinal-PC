@@ -1,4 +1,4 @@
 from django.shortcuts import render
 
-# Comentarios cambiados
-#Nueva linea de comentario editado
+def post_list(request):
+    return render(request, 'peliculas/base.html', {'publicacion':'publicacion'})
