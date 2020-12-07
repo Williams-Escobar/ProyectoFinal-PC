@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     #Nuevo comentario desde la nueva rama
     #path('', include('peliculas.urls')),
+    #hola mundo
 ]
