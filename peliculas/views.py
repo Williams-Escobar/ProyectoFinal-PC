@@ -33,3 +33,8 @@ def categoria_edit(request, pk):
     else:
         form = CategoriaForm(instance=categoria)
     return render(request, 'peliculas/categoria_edit.html', {'form': form})
+
+def categoria_delete(request, pk):
+    categoria = get_object_or_404(Categoria, pk=pk)
+    categoria.delete()
+    return redirect('categorias')
