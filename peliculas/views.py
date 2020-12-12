@@ -1,8 +1,7 @@
-from django.shortcuts import render
-from .models import Categoria 
-from .forms import CategoriaForm
-from django.shortcuts import redirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.utils import timezone
+from .models import Pelicula, Categoria
+from .forms import PeliculaForm, CategoriaForm
 
 def post_list(request):
     return render(request, 'peliculas/base.html', {'publicacion':'publicacion'})
@@ -38,3 +37,35 @@ def categoria_delete(request, pk):
     categoria = get_object_or_404(Categoria, pk=pk)
     categoria.delete()
     return redirect('categorias')
+
+def pelicula_list(request):
+    peliculas = Pelicula.objects.filter(fecha_Creacion__lte=timezone.now()).order_by('fecha_Creacion')
+    return render(request, 'peliculas/listPeliculas.html', {'peliculas':peliculas})
+
+def create_pelicula(request):
+    if request.method == "POST":
+        formulario = PeliculaForm(request.POST)
+        if formulario.is_valid():
+            publicacion = formulario.save(commit=False)
+            publicacion.save()
+            return redirect('pelicula_list')
+    else:
+        formulario = PeliculaForm()
+    return render(request, 'peliculas/newPelicula.html', {'form': formulario})
+
+def edit_pelicula(request,pk):
+    pelicula = get_object_or_404(Pelicula, pk=pk)
+    if request.method == "POST":
+        formulario = PeliculaForm(request.POST, instance=pelicula)
+        if formulario.is_valid():
+            pelicula = formulario.save(commit=False)
+            pelicula.save()
+            return redirect('pelicula_list')
+    else:
+        formulario = PeliculaForm(instance=pelicula)
+    return render(request, 'peliculas/newPelicula.html', {'form': formulario})
+
+def delete_pelicula(request, pk):
+    pelicula = get_object_or_404(Pelicula, pk=pk)
+    pelicula.delete()
+    return redirect('pelicula_list')
