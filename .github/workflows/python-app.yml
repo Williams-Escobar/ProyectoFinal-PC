@@ -13,6 +13,15 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+      steps:
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: whoami
     services:
       postgres:
         image: postgres:10.8
@@ -45,19 +54,3 @@ jobs:
       run: python manage.py test peliculas.tests.test_models.PeliculaModelTest
     - name: Run tests Categoria
       run: python manage.py test peliculas.tests.test_models.CategoriaModelTest
-    - name: remote ssh command
-      on: [push]
-      jobs:
-
-        build:
-          name: Build
-          runs-on: ubuntu-latest
-          steps:
-          - name: executing remote ssh commands using password
-            uses: appleboy/ssh-action@master
-            with:
-              host: ${{ secrets.HOST }}
-              username: ${{ secrets.USERNAME }}
-              password: ${{ secrets.PASSWORD }}
-              port: ${{ secrets.PORT }}
-              script: whoami
