@@ -14,9 +14,13 @@
                 <div class="container-fluid">
                   <a class="navbar-brand" href="/"><span class="fa fa-home"> </span> Inicio</a>
                   <a class="navbar-brand" href="{% url 'categorias' %}"><span class="fa fa-list"> </span> Categorias</a>
+                  {% if user.is_authenticated %}
                   <a class="navbar-brand" href="{% url 'create_pelicula' %}"><span class="fa fa-plus"></span> Crear Pelicula</a>
                   <a class="navbar-brand" href="{% url 'categoria_nuevo' %}"><span class="fa fa-plus"></span> Crear Categoria</a>
-                  
+                  <p class="navbar-brand">{{ user.username }} <small>(<a href="{% url 'logout' %}">Salir</a>)</small></p>
+                  {% else %}
+            <a href="{% url 'login' %}" data-toggle="tooltip" data-placement="right" title="Iniciar sesion" class="navbar-brand"><span class="fa fa-sign-in"></span></a>
+                  {% endif %}
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                   </button>

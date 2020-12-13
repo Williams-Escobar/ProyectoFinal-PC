@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from .models import Pelicula, Categoria
 from .forms import PeliculaForm, CategoriaForm
+from django.contrib.auth.decorators import login_required
 
 def post_list(request):
     return render(request, 'peliculas/base.html', {'publicacion':'publicacion'})
@@ -10,6 +11,7 @@ def categorias(request):
     categorias = Categoria.objects.order_by('nombre')
     return render(request, 'peliculas/categorias.html', {'categorias':categorias})
 
+@login_required
 def categoria_nuevo(request):
     if request.method == "POST":
         form = CategoriaForm(request.POST)
@@ -21,6 +23,7 @@ def categoria_nuevo(request):
         form = CategoriaForm()
     return render(request, 'peliculas/categoria_edit.html', {'form': form})
 
+@login_required
 def categoria_edit(request, pk):
     categoria = get_object_or_404(Categoria, pk=pk)
     if request.method == "POST":
@@ -33,6 +36,7 @@ def categoria_edit(request, pk):
         form = CategoriaForm(instance=categoria)
     return render(request, 'peliculas/categoria_edit.html', {'form': form})
 
+@login_required
 def categoria_delete(request, pk):
     categoria = get_object_or_404(Categoria, pk=pk)
     categoria.delete()
@@ -42,6 +46,7 @@ def pelicula_list(request):
     peliculas = Pelicula.objects.filter(fecha_Creacion__lte=timezone.now()).order_by('fecha_Creacion')
     return render(request, 'peliculas/listPeliculas.html', {'peliculas':peliculas})
 
+@login_required
 def create_pelicula(request):
     if request.method == "POST":
         formulario = PeliculaForm(request.POST)
@@ -53,6 +58,7 @@ def create_pelicula(request):
         formulario = PeliculaForm()
     return render(request, 'peliculas/newPelicula.html', {'form': formulario})
 
+@login_required
 def edit_pelicula(request,pk):
     pelicula = get_object_or_404(Pelicula, pk=pk)
     if request.method == "POST":
@@ -64,7 +70,8 @@ def edit_pelicula(request,pk):
     else:
         formulario = PeliculaForm(instance=pelicula)
     return render(request, 'peliculas/newPelicula.html', {'form': formulario})
-
+    
+@login_required
 def delete_pelicula(request, pk):
     pelicula = get_object_or_404(Pelicula, pk=pk)
     pelicula.delete()
