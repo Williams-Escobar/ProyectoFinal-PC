@@ -4,6 +4,7 @@ from .models import Pelicula, Categoria
 from .forms import PeliculaForm, CategoriaForm
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 import git
 
 def post_list(request):
@@ -79,6 +80,7 @@ def delete_pelicula(request, pk):
     pelicula.delete()
     return redirect('pelicula_list')
 
+@csrf_exempt
 def update(request):
     if request.method == "POST":
         repo = git.Repo("henryjosue.pythonanywhere.com/") 
