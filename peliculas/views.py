@@ -7,18 +7,6 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import git
 
-@csrf_exempt
-def update(request):
-    if request.method == "POST":
-        repo = git.Repo("henryjosue.pythonanywhere.com/") 
-        origin = repo.remotes.origin
-
-        origin.pull()
-
-        return HttpResponse("Updated code on PythonAnywhere")
-    else:
-        return HttpResponse("Couldn't update the code on PythonAnywhere")
-
 def post_list(request):
     return render(request, 'peliculas/base.html', {'publicacion':'publicacion'})
 
@@ -91,3 +79,15 @@ def delete_pelicula(request, pk):
     pelicula = get_object_or_404(Pelicula, pk=pk)
     pelicula.delete()
     return redirect('pelicula_list')
+
+@csrf_exempt
+def update(request):
+    if request.method == "POST":
+        repo = git.Repo("henryjosue.pythonanywhere.com/") 
+        origin = repo.remotes.origin
+
+        origin.pull()
+
+        return HttpResponse("Updated code on PythonAnywhere")
+    else:
+        return HttpResponse("Couldn't update the code on PythonAnywhere")
