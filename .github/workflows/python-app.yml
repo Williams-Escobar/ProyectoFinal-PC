@@ -29,5 +29,7 @@ jobs:
       run: |
         python manage.py makemigrations
         python manage.py migrate
-    - name: Run tests Proyecto
+    - name: Run tests Pelicula
       run: python manage.py test peliculas.tests.test_models.PeliculaModelTest
+    - name: Run tests Categoria
+      run: python manage.py test peliculas.tests.test_models.CategoriaModelTest

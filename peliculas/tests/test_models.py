@@ -1,8 +1,7 @@
 from django.test import TestCase
 from peliculas.models import Pelicula, Categoria
 
-class PeliculaModelTest(TestCase):
-
+class CategoriaModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         Categoria.objects.create(nombre = 'Titulo para la pelicula',
@@ -13,6 +12,10 @@ class PeliculaModelTest(TestCase):
         pelicula=Categoria.objects.get(id=1)
         max_length = Categoria._meta.get_field('nombre').max_length
         self.assertEquals(max_length,50)
+    pass
+
+class PeliculaModelTest(TestCase):
+
     @classmethod
     def setUpTestData(cls):
         categoria = Categoria.objects.create()
