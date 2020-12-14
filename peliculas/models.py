@@ -4,13 +4,13 @@ from django.utils import timezone
 # Create your models here.
 class Categoria (models.Model):
     nombre = models.CharField(max_length=50)
-    descripcion = models.CharField(max_length=100)
+    descripcion = models.IntegerField(max_length=100)
 
     def __str__(self):
         return self.nombre 
 
 class Pelicula (models.Model):
-    nombre = models.CharField(max_length=80)
+    nombre = models.CharField(max_length=50)
     sinopsis = models.TextField()
     anio   = models.IntegerField()
     productor = models.CharField(max_length=50)
