@@ -3,7 +3,7 @@ from django.utils import timezone
 
 # Create your models here.
 class Categoria (models.Model):
-    nombre = models.IntegerField(max_length=50)
+    nombre = models.CharField(max_length=50)
     descripcion = models.CharField(max_length=100)
 
     def __str__(self):
