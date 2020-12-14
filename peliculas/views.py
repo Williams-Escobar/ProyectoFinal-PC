@@ -83,7 +83,7 @@ def delete_pelicula(request, pk):
 @csrf_exempt
 def update(request):
     if request.method == "POST":
-        repo = git.Repo("henryjosue.pythonanywhere.comgit") 
+        repo = git.Repo("henryjosue.pythonanywhere.com") 
         origin = repo.remotes.origin
 
         origin.pull()
